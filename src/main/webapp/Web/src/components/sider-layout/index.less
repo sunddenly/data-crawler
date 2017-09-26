@@ -1,0 +1,111 @@
+@import "~antd/lib/style/themes/default.less";
+
+@sider-width: 200px;
+@sider-collapsed-width: 56px;
+@header-height: 48px;
+@bg-color: #ececec;
+@container-margin: 24px;
+@page-padding: 24px;
+@logo-margin: 24px;
+@header-padding: 0 12px;
+
+body {
+    background-color: @bg-color
+}
+
+.layout {
+    transition: all .3s @ease-out;
+    padding-left: @sider-width;
+
+    /* global */
+    .ant-menu {
+        border: none;
+    }
+
+    /* sider start */
+    &-sider {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        color: #999;
+        width: @sider-width !important;
+        background-color: #fff;
+
+        &-collapsed {
+            width: @sider-collapsed-width !important;
+        }
+
+        &-trigger {
+            font-size: 18px;
+            line-height: 48px;
+            padding: 0 16px;
+            cursor: pointer;
+            transition: @ease-in;
+            border-left: 1px solid #fafafa;
+        }
+
+        &-trigger:hover {
+            color: #108ee9;
+            background-color: fade(@primary-color, 15%);
+        }
+    }
+
+    &-collapsed {
+        padding-left: @sider-collapsed-width;
+    }
+
+    &-collapsed &-sider-menu .anticon {
+        @font-size: 18px;
+        font-size: @font-size;
+        margin-left: (24px - @font-size) / 2;
+    }
+
+    &-collapsed .ant-layout-sider-collapsed &-sider-menu .ant-menu-submenu-vertical > .ant-menu-submenu-title:after {
+        display: none;
+    }
+
+    &-collapsed &-sider {
+        width: @sider-collapsed-width !important;
+    }
+
+    &-collapsed &-sider-menu &-menu-text{
+        display: none;
+    }
+
+    &-collapsed &-sider-menu .ant-menu-sub &-menu-text{
+        display: initial;
+    }
+
+    /* sider end */
+
+    /* header start */
+    .ant-layout-header {
+        padding: @header-padding;
+        background-color: #fff;
+        height: @header-height;
+        line-height: @header-height;
+        box-shadow: 4px 4px 40px 0 rgba(0,0,0,.05);
+    }
+    /* header end */
+
+    /* content start */
+    .ant-layout {
+        &-content {
+            background-color: @bg-color
+        }
+    }
+    /* content end */
+
+    /* preset start */
+    &-container {
+        margin: @container-margin;
+    }
+
+    &-page {
+        background-color: #fff;
+        padding: @page-padding;
+        box-shadow: 4px 4px 20px 0 rgba(0,0,0,.01)
+    }
+    /* preset end */
+}

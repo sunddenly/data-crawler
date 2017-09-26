@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elong.mt.llz.data.crawler.dao.CityDao">
+
+    <select id="getAllCityInfo" resultType="com.elong.mt.llz.data.crawler.pojo.CityPo">
+        SELECT city_id AS cityId, city_name AS cityName, pin_yin AS pinYin, url, operate_time AS pinYin
+        FROM city
+    </select>
+
+    <select id="getCityId" resultType="int">
+        SELECT city_id AS cityId
+        FROM city
+        <where>
+                city_id = #{cityId}
+        </where>
+    </select>
+
+    <select id="getCityIds" resultType="int">
+        SELECT city_id AS cityId
+        FROM city
+        <where>
+            <foreach collection="citys" item="city" separator="OR">
+                (city_id = #{city.cityId})
+            </foreach>
+        </where>
+    </select>
+
+    <insert id="insertCityData" parameterType="com.elong.mt.llz.data.crawler.pojo.CityPo">
+        INSERT INTO city(city_id,city_name,pin_yin,url,operate_time)
+        VALUES (#{cityId},#{cityName},#{pinYin},#{url},now())
+    </insert>
+
+    <insert id="insertCityDatas" parameterType="java.util.List">
+        INSERT INTO city(city_id,city_name,pin_yin,url,operate_time)
+        VALUES
+        <foreach collection="citys" item="city" separator=",">
+            (#{city.cityId},#{city.cityName},#{city.pinYin},#{city.url},now())
+        </foreach>
+    </insert>
+</mapper>

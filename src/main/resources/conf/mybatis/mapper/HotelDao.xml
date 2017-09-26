@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elong.mt.llz.data.crawler.dao.HotelDao">
+    <select id="getCityHotelIds" parameterType="int" resultType="int">
+        SELECT hotel_id
+        FROM hotel
+        WHERE city_id = #{cityId}
+    </select>
+
+    <select id="getHotelCountByCityId" resultType="int" parameterType="int">
+        SELECT COUNT(hotel_id) AS hotelCount
+        FROM hotel
+        WHERE city_id = #{cityId}
+    </select>
+
+    <select id="getHotelByPage" parameterType="com.elong.mt.llz.data.crawler.pojo.entity.HotelPage" resultType="com.elong.mt.llz.data.crawler.pojo.HotelPo">
+        SELECT hotel_id AS hotelId, city_id AS cityId, hotel_name AS hotelName, hotel_type AS hotelType, score, address, floor_price AS floorPrice, url, operate_time AS operateTime
+        FROM hotel
+        WHERE city_id = #{cityId}
+        LIMIT #{begin},#{pageSize}
+    </select>
+
+    <select id="getHotelId" resultType="int">
+        SELECT hotel_id
+        FROM hotel
+        WHERE hotel_id = #{hotelId}
+    </select>
+
+    <select id="getHotelIds" resultType="int">
+        SELECT hotel_id
+        FROM hotel
+        <where>
+            <foreach collection="hotels" item="hotel" separator="OR">
+                (hotel_id = #{hotel.hotelId})
+            </foreach>
+        </where>
+    </select>
+
+    <select id="getCityHotelCount" resultType="com.elong.mt.llz.data.crawler.pojo.CityPo">
+        SELECT city_id AS cityId, count(hotel_id) AS hotelCount
+        FROM hotel
+        WHERE city_id = #{cityId}
+    </select>
+
+    <insert id="insertHotelData" parameterType="com.elong.mt.llz.data.crawler.pojo.HotelPo">
+        INSERT INTO hotel(hotel_id,city_id,hotel_name,hotel_type,score,address,floor_price,url,operate_time)
+        VALUES (#{hotelId},#{cityId},#{hotelName},#{hotelType},#{score},#{address},#{floorPrice},#{url},now())
+    </insert>
+
+    <insert id="insertHotelDatas" parameterType="java.util.List">
+        INSERT INTO hotel(hotel_id,city_id,hotel_name,hotel_type,score,address,floor_price,url,operate_time)
+        VALUES
+        <foreach collection="hotels" item="hotel" separator=",">
+            (#{hotel.hotelId},#{hotel.cityId},#{hotel.hotelName},#{hotel.hotelType},#{hotel.score},#{hotel.address},#{hotel.floorPrice},#{hotel.url},now())
+        </foreach>
+    </insert>
+    
+    <update id="updateHotelFloorPrice" parameterType="com.elong.mt.llz.data.crawler.pojo.HotelPo">
+        UPDATE hotel
+        SET floor_price = #{floorPrice},operate_time=now()
+        WHERE hotel_id = #{hotelId}
+    </update>
+
+</mapper>

@@ -1,0 +1,45 @@
+{
+    "extends": [
+      "airbnb"
+    ],
+    "parser": "babel-eslint",
+    "rules": {
+        // 设定js里也可以写jsx
+        "react/jsx-filename-extension": [
+            1,
+            {
+                "extensions": [
+                    ".js",
+                    ".jsx"
+                ]
+            }
+        ],
+        // forbidden取消掉
+        "react/forbid-prop-types": [1, {}],
+        // 属性中用bind及箭头函数、ref
+        "react/jsx-no-bind": [
+            2,
+            {
+                "ignoreRefs": true,
+                "allowArrowFunctions": true,
+                "allowBind": true
+            }
+        ],
+        "react/prop-types": [1, {}],
+        "no-shadow": [1, {}],
+        // export default 设为warning
+        "import/prefer-default-export": [1, {}],
+        // 参数不能被修改禁用
+        "no-param-reassign": [1, {}],
+        // 缩进
+        "indent": [2, 4],
+        // jsx 缩进
+        "react/jsx-indent": [2, 4],
+        // jsx 属性缩进
+        "react/jsx-indent-props": [2, 4],
+        "no-plusplus": "warn"
+    },
+    "globals": {
+      "fetch": true
+    }
+}

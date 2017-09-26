@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		   http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <context:property-placeholder location="classpath:conf/custom/env/*.properties" ignore-unresolvable="true"/>
+    <context:property-placeholder location="classpath:conf/custom/notenv/conf.properties" ignore-unresolvable="true"/>
+    <context:component-scan base-package="com.elong.mt.llz.data.crawler"/>
+    <mvc:annotation-driven/>
+
+    <!-- 对模型视图名称的解析，在请求时模型视图名称添加前后缀 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/views/"/>    <!-- 前缀 -->
+        <property name="suffix" value=".jsp"/>    <!-- 后缀 -->
+    </bean>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+        <!-- 增加property -->
+        <property name="cache" value="false"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+        <property name="suffix" value=".vm"/>
+        <property name="requestContextAttribute" value="rc"/>
+    </bean>
+
+    <mvc:default-servlet-handler/>
+    <!--静态资源映射-->
+    <mvc:resources mapping="/css/**" location="/WEB-INF/statics/css/"/>
+    <mvc:resources mapping="/js/**" location="/WEB-INF/statics/js/"/>
+    <mvc:resources mapping="/images/**" location="/WEB-INF/statics/images/"/>
+</beans>

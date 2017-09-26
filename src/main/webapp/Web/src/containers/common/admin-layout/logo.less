@@ -1,0 +1,45 @@
+@import "../../../styles/var";
+@import "../../../components/sider-layout/index.less";
+
+.layout {
+    &-logoimg {
+        @height: 40px;
+
+        display: flex;
+        margin: 16px 0;
+        line-height: @height;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        transition: @transition-ease-out;
+
+        img {
+            width: @height;
+            height: @height;
+            margin-right: 8px;
+            transition: @transition-ease-out;
+        }
+
+        span {
+            display: block;
+            // flex: 1;
+            font-size: 16px;
+            line-height: @height;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+    }
+
+    &-collapsed &-logoimg {
+        @height: 28px;
+
+        img {
+            width: @height;
+            height: @height;
+        }
+
+        span {
+            display: none;
+        }
+    }
+}

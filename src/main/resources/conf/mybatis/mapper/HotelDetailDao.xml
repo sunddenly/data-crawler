@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elong.mt.llz.data.crawler.dao.HotelDetailDao">
+    <select id="getHotelIds" resultType="int" >
+        SELECT hotel_id AS hotelId
+        FROM hotel_detail
+        GROUP BY hotel_id
+    </select>
+
+    <select id="getHotelDetails" parameterType="int" resultType="com.elong.mt.llz.data.crawler.pojo.HotelDetailPo">
+        SELECT hotel_id AS hotelId,room_name AS roomName, room_size AS roomSize, bed_type AS bedType, price, memo, operate_time AS operateTime
+        FROM hotel_detail
+        WHERE hotel_id = #{hotelId}
+    </select>
+
+    <delete id="deleteHotelDetails" parameterType="java.util.List">
+        DELETE FROM hotel_detail
+        <where>
+            <foreach collection="hotelIds" item="hotelId">
+                hotel_id = #{hotelId}
+            </foreach>
+        </where>
+    </delete>
+
+    <insert id="insertHotelDetails" parameterType="java.util.List">
+        INSERT INTO hotel_detail(hotel_id,room_name,room_size,bed_type,price,memo,operate_time)
+        VALUES
+        <foreach collection="hotels" item="hotel" separator=",">
+            (#{hotel.hotelId},#{hotel.roomName},#{hotel.roomSize},#{hotel.bedType},#{hotel.price},#{hotel.memo},now())
+        </foreach>
+    </insert>
+
+
+
+</mapper>

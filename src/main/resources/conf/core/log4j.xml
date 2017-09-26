@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- 控制台输出 -->
+	<appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p [%c] - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+
+	<!-- crawler访问日志 -->
+	<appender name="crawlerAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${user.home}/logs/crawler.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p [%c{1}:%L] - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="INFO" />
+		</filter>
+	</appender>
+
+	<logger name="org.apache" additivity="false">
+		<level value="info" />
+		<appender-ref ref="stdout" />
+	</logger>
+
+	<!--屏蔽所有org.springframework.*输出的Debug（及以下）信息-->
+	<logger name="org.springframework">
+		<level value="INFO"></level>
+	</logger>
+
+	<logger name="com.elong.mt.llz.data.crawler" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="crawlerAppender" />
+	</logger>
+
+	<root>
+		<level value="DEBUG" />
+		<appender-ref ref="stdout" />
+	</root>
+
+
+</log4j:configuration>
